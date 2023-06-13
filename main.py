@@ -1,8 +1,21 @@
 from fastapi import FastAPI
 import httpx
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 client = httpx.AsyncClient(base_url="https://valorant-api.com/v1/")
+
+# Allow CORS for all origins
+origins = ["*"]
+
+# Add CORS middleware to the FastAPI app
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def home():
