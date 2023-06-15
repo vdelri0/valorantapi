@@ -22,8 +22,11 @@ def home():
     return {"message": "¡Bienvenido a la aplicación de Valorant!"}
 
 @app.get("/agents")
-async def get_agents():
-    response = await client.get("/agents")
+async def get_agents(is_playable: bool = True):
+    params = {}
+    if is_playable:
+        params["isPlayableCharacter"] = "true"
+    response = await client.get("/agents", params=params)
     return response.json()
 
 @app.get("/agents/{agent_id}")
